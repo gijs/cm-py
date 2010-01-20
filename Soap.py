@@ -2,11 +2,11 @@ from xml.dom import minidom
 import urllib2
 
 html_escape_table = {
-    "&": "&amp;",
-    '"': "&quot;",
-    "'": "&apos;",
-    ">": "&gt;",
-    "<": "&lt;",
+    u"&": u"&amp;",
+    u'"': u"&quot;",
+    u"'": u"&apos;",
+    u">": u"&gt;",
+    u"<": u"&lt;",
     }
 
 def html_escape(text):
@@ -14,7 +14,7 @@ def html_escape(text):
     L=[]
     for c in text:
         L.append(html_escape_table.get(c,c))
-    return "".join(L)
+    return u"".join(L)
 
 class Soap(object):
     # 'private' methods
@@ -50,8 +50,9 @@ class Soap(object):
             print "Request %s (SOAPAction: %s):" % (self.url, soap_action)
             print env
         
-        req = urllib2.Request(self.url, env)
-        req.add_header('Content-Type', 'text/xml')
+        req = urllib2.Request(self.url, env.encode('utf-8'))
+        req.add_header('Content-Type', 'text/xml; charset=utf-8')
+        req.add_header('Charset', 'utf-8')
         req.add_header('SOAPAction', soap_action)
         try:
             hndl = urllib2.urlopen(req)
@@ -104,7 +105,7 @@ class Soap(object):
                     resp += self.xmlise_dict(i)
                 resp+= "</%(k)s>\n" % {"k":k}
             else:
-                resp += tmpl % { "k":k, "v": html_escape(str(v)) }
+                resp += tmpl % { "k":k, "v": html_escape(v) }
         
         return resp
     
