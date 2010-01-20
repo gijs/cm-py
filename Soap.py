@@ -27,7 +27,8 @@ class Soap(object):
 
     def call(self, method, params):
         soap_params = self.xmlise_dict(params)
-        print soap_params
+        if self.debug_soap_requests:
+            print soap_params
         variables = {
             "method" : method,
             "namespace" : self.namespace,
@@ -144,7 +145,8 @@ class SoapObject(Soap):
     def __getattr__(self, attr):
         def defmeth(**args):
             props = self._parse_args(args)
-            print props
+            if self.debug:
+                print props
             cls = self.__class__.__name__
             return self.call(str(cls)+"."+attr, props)
         return defmeth
