@@ -13,4 +13,4 @@ Usage:
 
 	from campaign_monitor import User
 	user = User(api_key=YOUR_API_KEY)
- 	print user.GetClients()
+	print user.GetClients()
