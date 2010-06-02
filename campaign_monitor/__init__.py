@@ -1,10 +1,10 @@
 from Soap import *
-from settings import *
+from settings import CAMPAIGN_MONITOR_NAMESPACE, CAMPAIGN_MONITOR_URL
 
 class CampaignMonitor(SoapObject):
     
-    def __init__(self, **kwargs):
-        self.extra_keys['ApiKey'] = CAMPAIGN_MONITOR_KEY
+    def __init__(self, api_key=None, **kwargs):
+        self.extra_keys['ApiKey'] = api_key or getattr(settings, 'CAMPAIGN_MONITOR_KEY')
         SoapObject.__init__(self, CAMPAIGN_MONITOR_NAMESPACE, CAMPAIGN_MONITOR_URL, self.parse, True, **kwargs)
     
     def parse(self, method, soap_resp):
