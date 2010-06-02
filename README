@@ -3,3 +3,14 @@ Python wrapper for the Campaign Monitor SOAP API, which provides access to all A
 Campaign Monitor API: http://www.campaignmonitor.com/api/
 
 Original code by Christopher Cote of Entropealabs.
+
+
+To install via pip:
+
+	pip install -e git+http://github.com/ozan/cm-py.git#egg=campaign_monitor
+	
+Usage:
+
+	from campaign_monitor import User
+	user = User(api_key=YOUR_API_KEY)
+ 	print user.GetClients()
