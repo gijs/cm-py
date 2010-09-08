@@ -22,7 +22,8 @@ class CampaignMonitor(SoapObject):
                     for node_list in node.childNodes:
                         node_info = {}
                         for i in node_list.childNodes:
-                            node_info[i.nodeName] = i.firstChild.nodeValue
+                            if i.firstChild:
+                                node_info[i.nodeName] = i.firstChild.nodeValue
                         arr.append(node_info)
                     
                     return arr
